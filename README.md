@@ -24,6 +24,15 @@ Users Schema (MongoDB)
 username: String 
 password: String 
 email: String
+role : String (customer/admin)
+
+Orders schema
+
+order_id : ObjectID
+username : String(Foreign key)
+product_name : String
+total_amount : Number
+status : String ("Pending","completed" etc.)
 
 Frontend Setup Basic structure set up for React components, including directories for components and services. 
 State management planned to handle user sessions and cart data.
