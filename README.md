@@ -6,18 +6,27 @@ Technology Stack Frontend: ReactJS Backend: Node.js with Express Database: Mongo
 
 Project Setup Project Initialization: Repository created on GitHub and cloned to local machine. 
 
+Web Application Title:-
+ The Chennai Mobiles 
+
+Description:-
+A Smartphone store where people can buy different brands of latest smartphones in the market.
+
+Tech Stack:-
+
 Frontend Setup: Initialized ReactJS project. 
 
 Backend Setup: Initialized Node.js project with Express and connected to MongoDB (Atlas). 
 
 Database Schema Design Products Schema (MongoDB)
 
-name: String 
+name: String
+brand: String 
 description: String 
 price: Number 
 category: String 
 stock: Number 
-imageUrl: String 
+imageLink: String 
 
 Users Schema (MongoDB)
 
@@ -28,13 +37,11 @@ role : String (customer/admin)
 
 Orders schema
 
-order_id : ObjectID
-username : String(Foreign key)
-product_name : String
-total_amount : Number
-status : String ("Pending","completed" etc.)
+orderId : ObjectID
+email : String(Foreign key)
+productName : String
+totalPrice : Number
+status : String ("On Process","Successful","Failed")
 
-Frontend Setup Basic structure set up for React components, including directories for components and services. 
-State management planned to handle user sessions and cart data.
-
-Notes:- The project is set up using Git and GitHub for version control. Further development will include implementing user interfaces for product listings, shopping cart, and checkout.
+Notes:- The project is set up using Git and GitHub for version control.
+Further development will include implementing user interfaces for product listings, shopping cart, and checkout.
