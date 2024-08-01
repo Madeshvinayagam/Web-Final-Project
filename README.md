@@ -1,47 +1,45 @@
-This Repository is Used for the Version Control of my Final Project in Web Technologies
+# E-COMMERCE PROJECT
 
-Student Name: [Madesh Vinayagam] Student Number: [8963164] Date: [19/07/2024]
+## The Chennai Mobiles
 
-Technology Stack Frontend: ReactJS Backend: Node.js with Express Database: MongoDB (Atlas)
-
-Project Setup Project Initialization: Repository created on GitHub and cloned to local machine. 
-
-Web Application Title:-
- The Chennai Mobiles 
-
-Description:-
+##### Description
 A Smartphone store where people can buy different brands of latest smartphones in the market.
 
-Tech Stack:-
+#####  Tech Stack:-
 
-Frontend Setup: Initialized ReactJS project. 
+#####  Frontend Setup
+Initialized ReactJS project.
 
-Backend Setup: Initialized Node.js project with Express and connected to MongoDB (Atlas). 
+#####  Backend Setup: 
+Initialized Node.js project with Express and connected to MongoDB (Atlas).
 
-Database Schema Design Products Schema (MongoDB)
+##### Database Schema Design (MongoDB)
 
-name: String
-brand: String 
-description: String 
-price: Number 
-category: String 
-stock: Number 
-imageLink: String 
+###### Products Schema
 
-Users Schema (MongoDB)
+- name: String 
+- brand: String 
+- description: String 
+- price: Number 
+- category: String 
+- stock: Number 
+- imageLink: String
 
-username: String 
-password: String 
-email: String
-role : String (customer/admin)
+###### Users Schema
 
-Orders schema
+- username: String 
+- password: String 
+- email: String 
+- role : String (customer/admin)
 
-orderId : ObjectID
-email : String(Foreign key)
-productName : String
-totalPrice : Number
-status : String ("On Process","Successful","Failed")
+###### Orders schema
 
-Notes:- The project is set up using Git and GitHub for version control.
-Further development will include implementing user interfaces for product listings, shopping cart, and checkout.
+- orderId : ObjectID 
+- email : String(Foreign key) 
+- productName : String 
+- totalPrice : Number 
+- status : String ("On Process","Successful","Failed")
+
+> Notes:- The project is set up using Git and GitHub for version control.
+
+_Further development will include implementing user interfaces for product listings, shopping cart, and checkout._
