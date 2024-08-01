@@ -3,7 +3,6 @@ const mongoose = require('mongoose');
 // TODO: Your Schema. Do NOT USE Book, Person or Car
 const orderSchema = new mongoose.Schema({
 
-  orderId: mongoose.Schema.Types.ObjectId,
   email: String,
   productName: String,
   totalPrice: Number,

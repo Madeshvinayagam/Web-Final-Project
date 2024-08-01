@@ -16,6 +16,7 @@ mongoose.connect('mongodb+srv://madeshv:madeshv@cluster0.jzmchug.mongodb.net/?re
     console.error('Error:', err);
   });
 
+  // Product CRUD //
   // TODO: Create
 const createProduct = async (name, brand, description, price, category, stock, imageLink ) => {
     return new productModel({ name, brand, description, price, category, stock, imageLink })
@@ -48,32 +49,95 @@ const createProduct = async (name, brand, description, price, category, stock, i
     const result = await productModel.deleteOne({ _id: id });
     console.log('Product Deleted Successfully : ', result);
   };
+
+  // User CRUD //
+  // TODO: Create
+const createUser = async (name, password, email, role) => {
+    return new userModel({ name, password, email, role})
+      .save()
+      .then(result => {
+        console.log('User Created Successfully : ', result);
+        return result;
+      })
+      .catch(error => {
+        console.error('Error creating User : ', error);
+        return null;
+      });
+  };
   
+  
+  // TODO: Read
+  const readUsers = async () => {
+    const userList = await orderModel.find();
+    console.log('All Users : ', userList);
+  };
+  
+  // TODO: Update
+  const updateUser = async (id, newEmail) => {
+    const result = await userModel.updateOne({ _id: id }, { $set: { email: newEmail}});
+    console.log('User Updated Successfully : ', result);
+  };
+  
+  // TODO: Delete
+  const deleteUser = async (id) => {
+    const result = await userModel.deleteOne({ _id: id });
+    console.log('User Deleted Successfully : ', result);
+  };
+
+  // Order CRUD
+  // TODO: Create
+const createOrder = async (email, productName, totalPrice, status) => {
+    return new orderModel({email, productName, totalPrice, status})
+      .save()
+      .then(result => {
+        console.log('Order Created Successfully : ', result);
+        return result;
+      })
+      .catch(error => {
+        console.error('Error creating Order : ', error);
+        return null;
+      });
+  };
+  
+  
+  // TODO: Read
+  const readOrders = async () => {
+    const orderList = await orderModel.find();
+    console.log('All Order : ', orderList);
+  };
+  
+  // TODO: Update
+  const updateOrder = async (id, newStatus) => {
+    const result = await orderModel.updateOne({ _id: id }, { $set: { status: newStatus}});
+    console.log('Order Updated Successfully : ', result);
+  };
+  
+  // TODO: Delete
+  const deleteOrder = async (id) => {
+    const result = await orderModel.deleteOne({ _id: id });
+    console.log('Order Deleted Successfully : ', result);
+  };
+
   // TODO: Sequential CRUD Operations
   const performCRUDOperations = async () => {
-    const newProduct1 = await createProduct('iPhone 12', 'Apple', 'Flagship Performance', 999, 'Smartphone', 5, 'imageLink_1');
-    const newProduct2 = await createProduct('Galaxy S22', 'Samsung', 'Camera All-rounder',  1200, 'Smartphone', 2, 'imageLink_2');
+    const newProduct1 = await createProduct('iPhone 12', 'Apple', 'Flagship Performance', 999);
+    const newProduct2 = await createProduct('Galaxy S22', 'Samsung', 'Camera All-rounder',  1200);
+
+    const newUser1 = await createUser('Madesh', 'madesh123', 'madesh@email.com', 'Admin');
+    const newUser2 = await createUser('Raina', 'raina123', 'raina@email.com', 'Customer');
+
+    const newOrder = await createOrder('madesh1@email.com', 'iPhone 12', 999, 'Successful');
+    
     
   
     // READ
     await readProducts();
-  
-    // Get the ID of the first product
-    const productId = newProduct1._id;
-    const productId2 = newProduct2._id;
-  
-  
-    // Update the price of the first product
-    await updateProduct(productId, 700);
-    console.log('Updated the Product price!');
-  
-    // Read all product after updating
-    await readProducts();
-  
-    // Delete the first product
-    // await deleteProduct(productId2);
-    // console.log('Deleted the Second product!');
-    // await readProducts();
+    await readUsers();
+    await readOrders();
+
     
   };
+
+  
+  
   
