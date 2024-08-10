@@ -42,4 +42,6 @@ Initialized Node.js project with Express and connected to MongoDB (Atlas).
 
 > Notes:- The project is set up using Git and GitHub for version control.
 
+> Recent Updates:- Updated Product page, product list by category and product details
+
 _Further development will include implementing user interfaces for product listings, shopping cart, and checkout._
