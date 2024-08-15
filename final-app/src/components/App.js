@@ -10,9 +10,7 @@ import ProductDetailsPage from '../pages/ProductDetailsPage';
 import ProductList from './ProductList';
 import AboutPage from '../pages/AboutPage';
 import CheckoutPage from '../pages/CheckoutPage';
-import LoginPage from '../pages/LoginPage';
-import AdminDashboard from '../pages/AdminDashboard'; 
-import UserDashboard from '../pages/UserDashboard';
+
 
 const App = () => {
   const [cartItems, setCartItems] = React.useState([]);
@@ -49,9 +47,7 @@ const App = () => {
             <Route path="/products" element={<ProductList />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/checkoutpage/:productId" element={<CheckoutPage />} />
-            <Route path="/" element={<LoginPage />} />
-        <Route path="/admin-dashboard" element={<AdminDashboard />} />
-        <Route path="/user-dashboard" element={<UserDashboard />} />
+        
           </Routes>
         </main>
         <Footer />

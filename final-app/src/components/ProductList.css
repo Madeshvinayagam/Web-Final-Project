@@ -1,6 +1,6 @@
 
 .product-thumbnail {
-    width: 50px;  /* Adjust to your desired size */
-    height: 50px; /* Maintain aspect ratio if needed */
-    object-fit: cover; /* Crop image to fit the box */
+    width: 50px;  
+    height: 50px; 
+    object-fit: cover; 
   }

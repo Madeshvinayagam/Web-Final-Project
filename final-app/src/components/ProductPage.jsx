@@ -19,7 +19,7 @@ const ProductPage = ({ productId, onAddToCart }) => {
 
   const handleAddToCart = () => {
     if (product) {
-      onAddToCart(product); // Call the parent function to add the product to the cart
+      onAddToCart(product); 
     }
   };
 
