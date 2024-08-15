@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 
 const CategoryList = () => {
   const [categories, setCategories] = useState([]);
@@ -8,7 +9,6 @@ const CategoryList = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        // Make sure the URL is correct; it should match your backend endpoint
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/categories`);
         setCategories(response.data);
       } catch (error) {
@@ -20,17 +20,22 @@ const CategoryList = () => {
   }, []);
 
   return (
-    <section>
-      <h2>Categories</h2>
-      <ul>
+    <section className="container my-4">
+      <h2 className="mb-4">Available Categories</h2>
+      <div className="row">
         {categories.map((category, index) => (
-          <li key={index}>
-            <Link to={`/category/${category}`}>
-              {category}
-            </Link>
-          </li>
+          <div key={index} className="col-md-4 mb-4">
+            <div className="card">
+              <div className="card-body">
+                <h5 className="card-title">{category}</h5>
+                <Link to={`/category/${category}`} className="btn btn-primary">
+                  View Products
+                </Link>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </section>
   );
 };

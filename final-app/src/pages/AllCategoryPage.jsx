@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 const AllCategoryPage = () => {
   const [categories, setCategories] = useState([]);
@@ -19,17 +20,22 @@ const AllCategoryPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>All Categories</h1>
-      <ul>
+    <div className="container my-4">
+      <h1 className="mb-4 text-center">All Categories</h1>
+      <div className="row">
         {categories.map((category, index) => (
-          <li key={index}>
-            <Link to={`/category/${category}`}>
-              {category}
-            </Link>
-          </li>
+          <div key={index} className="col-md-4 mb-4">
+            <div className="card">
+              <div className="card-body text-center">
+                <h5 className="card-title">{category}</h5>
+                <Link to={`/category/${category}`} className="btn btn-primary">
+                  View Products
+                </Link>
+              </div>
+            </div>
+          </div>
         ))}
-      </ul>
+      </div>
     </div>
   );
 };

@@ -1,27 +1,26 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
-import { fetchProductById } from './App'; // Adjust the import path if necessary
-import ProductDetails from '../components/ProductDetails';
+import axios from 'axios';
 
-const ProductDetailsPage = () => {
-  const { id } = useParams(); // Extract the product ID from the URL
+const apiUrl = process.env.REACT_APP_API_URL; // Use the environment variable for the API URL
+
+const ProductDetails = ({ productId }) => {
   const [product, setProduct] = useState(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const loadProduct = async () => {
+    const fetchProductDetails = async () => {
       try {
-        const fetchedProduct = await fetchProductById(id);
-        setProduct(fetchedProduct);
+        const response = await axios.get(`${apiUrl}/product/${productId}`);
+        setProduct(response.data);
+        setLoading(false);
       } catch (error) {
-        console.error('Failed to load product:', error);
-      } finally {
+        console.error('Error fetching product details:', error);
         setLoading(false);
       }
     };
 
-    loadProduct();
-  }, [id]);
+    fetchProductDetails();
+  }, [productId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -32,8 +31,14 @@ const ProductDetailsPage = () => {
   }
 
   return (
-    <ProductDetails product={product} />
+    <div>
+      <h1>{product.name}</h1>
+      <p>{product.description}</p>
+      <p>Price: ${product.price}</p>
+      <p>Category: {product.category}</p>
+      {/* Add more product details as needed */}
+    </div>
   );
 };
 
-export default ProductDetailsPage;
+export default ProductDetails;

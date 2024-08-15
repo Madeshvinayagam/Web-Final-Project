@@ -6,8 +6,8 @@
   }
   
   .product-card-link {
-    text-decoration: none; /* Remove underline from links */
-    color: inherit; /* Inherit text color from parent */
+    text-decoration: none; 
+    color: inherit; 
   }
   
   .product-card {

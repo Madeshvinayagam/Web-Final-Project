@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import './ProductList.css'; 
+
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -19,17 +21,33 @@ const ProductList = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Product List</h1>
-      <ul>
-        {products.map(product => (
-          <li key={product._id}>
-            <Link to={`/product/${product._id}`}>
-              {product.name} - ${product.price}
-            </Link>
-          </li>
-        ))}
-      </ul>
+    <div className="container mt-4">
+      <h1 className="mb-4">Product List</h1>
+      <table className="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products.map(product => (
+            <tr key={product._id}>
+              <td>
+                <img 
+                  src={product.imageLink} 
+                  alt={product.name} 
+                  className="product-thumbnail" 
+                />
+              </td>
+              <td>{product.name}</td>
+              <td>${product.price}</td>
+            </tr>
+          ))}
+        </tbody>
+        <br />
+      </table>
     </div>
   );
 };

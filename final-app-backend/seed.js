@@ -18,8 +18,9 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
         price: 899.99,
         category: 'Smartphones',
         stock: 50,
-        imageLink: 'https://example.com/samsung-s24.jpg'
-      },
+        imageLink: 'https://cdn.pixabay.com/photo/2019/12/27/01/46/samsung-4721542_1280.jpg'
+      }
+      ,
       {
         name: 'iPhone 15 Pro Max',
         brand: 'Apple',
@@ -27,7 +28,7 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
         price: 1099.99,
         category: 'Smartphones',
         stock: 30,
-        imageLink: 'https://example.com/iphone-15-pro-max.jpg'
+        imageLink: 'https://cdn.pixabay.com/photo/2022/05/04/07/38/iphone-13-pro-max-7173413_1280.jpg'
       },
       {
         name: 'Google Pixel 8 Pro',
@@ -36,7 +37,16 @@ mongoose.connect(mongoUri, { useNewUrlParser: true, useUnifiedTopology: true })
         price: 999.99,
         category: 'Smartphones',
         stock: 20,
-        imageLink: 'https://example.com/google-pixel-8-pro.jpg'
+        imageLink: 'https://cdn.pixabay.com/photo/2022/10/14/09/58/google-pixel-7520958_1280.jpg'
+      },
+      {
+        name: 'Magsafe charger 20W',
+        brand: 'Apple',
+        description: 'Latest magnetic charger for apple devices',
+        price: 150.00,
+        category: 'Chargers',
+        stock: 20,
+        imageLink: 'https://media.istockphoto.com/id/1363305356/photo/battery-charger-isolated-on-white-background-wireless-charger-close-up.jpg?s=2048x2048&w=is&k=20&c=fdAqO7Y0buKwf41ZlqA_XI-etQM0xS0JhFENDw3Tkig='
       }
     ];
 

@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const CheckoutPage = () => {
+  const { productId } = useParams(); 
   const [formData, setFormData] = useState({
-    name: '',
     email: '',
     productName: '',
     totalPrice: 0
@@ -11,6 +13,26 @@ const CheckoutPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');
+  const [product, setProduct] = useState(null);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const response = await axios.get(`${process.env.REACT_APP_API_URL}/product/${productId}`);
+        setProduct(response.data);
+        setFormData(prevData => ({
+          ...prevData,
+          productName: response.data.name,
+          totalPrice: response.data.price
+        }));
+      } catch (err) {
+        console.error('Error fetching product:', err);
+        setError('Failed to fetch product details.');
+      }
+    };
+
+    fetchProduct();
+  }, [productId]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -24,92 +46,85 @@ const CheckoutPage = () => {
     setSuccess('');
 
     try {
-      // Send form data to your server
-      const userResponse = await axios.post(`${process.env.REACT_APP_API_URL}/users`, {
-        name: formData.name,
-        email: formData.email,
-        role: 'user' // Default role; adjust as needed
-      });
-
-      const orderResponse = await axios.post(`${process.env.REACT_APP_API_URL}/orders`, {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/order`, {
         email: formData.email,
         productName: formData.productName,
-        totalPrice: formData.totalPrice
+        totalPrice: formData.totalPrice,
+        status: 'Pending'
       });
 
-      setSuccess('Order placed successfully!');
-      setFormData({
-        name: '',
-        email: '',
-        productName: '',
-        totalPrice: 0
-      });
+      if (response.status === 201) {
+        setSuccess('Order placed successfully!');
+        setFormData({
+          email: '',
+          productName: '',
+          totalPrice: 0
+        });
+      } else {
+        setError('Unexpected response from the server.');
+      }
     } catch (err) {
       console.error('Error placing order:', err);
-      setError('Failed to place order. Please try again.');
+      if (err.response) {
+        setError(`Error: ${err.response.data.error || 'Failed to place order. Please try again.'}`);
+      } else {
+        setError('Failed to place order. Please check your connection.');
+      }
     } finally {
       setLoading(false);
     }
   };
 
   return (
-    <div>
+    <div className="container mt-4">
+      <div className="mb-4">
+        <Link to="/" className="btn btn-secondary">
+          Back to Homepage
+        </Link>
+      </div>
       <h1>Checkout</h1>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label>
-            Name:
-            <input
-              type="text"
-              name="name"
-              value={formData.name}
-              onChange={handleChange}
-              required
-            />
-          </label>
-        </div>
-        <div>
-          <label>
-            Email:
+      {product ? (
+        <form onSubmit={handleSubmit}>
+          <div className="mb-3">
+            <label className="form-label">Email:</label>
             <input
               type="email"
               name="email"
               value={formData.email}
               onChange={handleChange}
+              className="form-control"
               required
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Product Name:
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Product Name:</label>
             <input
               type="text"
               name="productName"
               value={formData.productName}
-              onChange={handleChange}
-              required
+              readOnly
+              className="form-control"
             />
-          </label>
-        </div>
-        <div>
-          <label>
-            Total Price:
+          </div>
+          <div className="mb-3">
+            <label className="form-label">Total Price:</label>
             <input
               type="number"
               name="totalPrice"
               value={formData.totalPrice}
-              onChange={handleChange}
-              required
+              readOnly
+              className="form-control"
             />
-          </label>
-        </div>
-        <button type="submit" disabled={loading}>
-          {loading ? 'Processing...' : 'Place Order'}
-        </button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-        {success && <p style={{ color: 'green' }}>{success}</p>}
-      </form>
+          </div>
+          <button type="submit" className="btn btn-primary" disabled={loading}>
+            {loading ? 'Processing...' : 'Place Order'}
+          </button>
+          {error && <p className="text-danger mt-2">{error}</p>}
+          {success && <p className="text-success mt-2">{success}</p>}
+        </form>
+      ) : (
+        <p>Loading product details...</p>
+      )}
     </div>
   );
 };

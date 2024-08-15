@@ -1,19 +1,35 @@
-import React from 'react';
-import { useParams } from 'react-router-dom';
-import ProductDetails from '../components/ProductDetails';
 
-const ProductPage = () => {
-  const { id } = useParams();
+import React from 'react';
+
+const Cart = ({ cartItems, onRemove, onQuantityChange }) => {
+  
+
+  const totalPrice = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
 
   return (
-    <div>
-     
-      <main>
-        <ProductDetails productId={id} />
-      </main>
-     
-    </div>
+    <section>
+      <h2>Your Cart</h2>
+      {cartItems.length === 0 ? (
+        <p>Cart is empty</p>
+      ) : (
+        <ul>
+          {cartItems.map(item => (
+            <li key={item.id}>
+              {item.name} - ${item.price} x {item.quantity}
+              <button onClick={() => onRemove(item.id)}>Remove</button>
+              <input
+                type="number"
+                value={item.quantity}
+                onChange={(e) => onQuantityChange(item.id, parseInt(e.target.value))}
+                min="1"
+              />
+            </li>
+          ))}
+        </ul>
+      )}
+      <p>Total Price: ${totalPrice}</p>
+    </section>
   );
 };
 
-export default ProductPage;
+export default Cart;

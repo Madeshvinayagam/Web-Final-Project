@@ -1,19 +1,22 @@
 import React, { useEffect, useState } from 'react';
-import { useParams, Link } from 'react-router-dom'; // Import Link for navigation
+import { useParams, Link } from 'react-router-dom';
 import axios from 'axios';
-import './CategoryPage.css'; // Import CSS for styling
+import 'bootstrap/dist/css/bootstrap.min.css'; 
+import './CategoryPage.css'; 
 
 const CategoryPage = () => {
-  const { category } = useParams(); // Extract category from URL params
+  const { category } = useParams(); 
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
     const fetchProductsByCategory = async () => {
       try {
         const response = await axios.get(`${process.env.REACT_APP_API_URL}/products`, {
-          params: { category }, // Send category as query param
+          params: { category }, // Ensure the category is passed as a query parameter
         });
-        setProducts(response.data);
+        // Filter products to ensure category matches the query parameter
+        const filteredProducts = response.data.filter(product => product.category.toLowerCase() === category.toLowerCase());
+        setProducts(filteredProducts);
       } catch (error) {
         console.error('Error fetching products by category:', error);
       }
@@ -24,19 +27,29 @@ const CategoryPage = () => {
 
   return (
     <div>
+      <div className="mb-4">
+        <Link to="/" className="btn btn-secondary">
+          Back to Homepage
+        </Link>
+      </div>
       <h1>Products in Category: {category}</h1>
       <div className="product-grid">
-        {products.map(product => (
-          <Link to={`/product/${product._id}`} key={product._id} className="product-card-link">
-            <div className="product-card">
+        {products.length > 0 ? (
+          products.map(product => (
+            <div key={product._id} className="product-card">
               <img src={product.imageLink} alt={product.name} className="product-image" />
               <div className="product-info">
                 <h2>{product.name}</h2>
                 <p>${product.price}</p>
+                <Link to={`/product/${product._id}`} className="btn btn-primary">
+                  View Details
+                </Link>
               </div>
             </div>
-          </Link>
-        ))}
+          ))
+        ) : (
+          <p>No products found in this category.</p>
+        )}
       </div>
     </div>
   );

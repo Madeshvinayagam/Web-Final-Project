@@ -3,7 +3,6 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors'); 
 
-
 const Product = require('./models/Product');
 const User = require('./models/User');
 const Order = require('./models/Order');
@@ -13,7 +12,8 @@ app.use(bodyParser.json());
 app.use(cors()); 
 
 // Database connection
-mongoose.connect('mongodb+srv://madeshv:madeshv@cluster0.jzmchug.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect('mongodb+srv://madeshv:madeshv@cluster0.jzmchug.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0', 
+  { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {
     console.log('Connected to MongoDB');
     // Start the server
@@ -39,7 +39,9 @@ app.post('/product', async (req, res) => {
 
 app.get('/products', async (req, res) => {
   try {
-    const products = await Product.find();
+    const { category } = req.query;
+    const query = category ? { category } : {};
+    const products = await Product.find(query);
     res.json(products);
   } catch (error) {
     res.status(500).json({ error: error.message });
@@ -125,7 +127,7 @@ app.delete('/user/:id', async (req, res) => {
 // Order CRUD //
 app.post('/order', async (req, res) => {
   try {
-    const { email, productName, totalPrice, status } = req.body;
+    const { email, productName, totalPrice, status = 'Pending' } = req.body;
     const order = new Order({ email, productName, totalPrice, status });
     const result = await order.save();
     res.status(201).json(result);
@@ -167,20 +169,18 @@ app.delete('/order/:id', async (req, res) => {
 // Get unique categories
 app.get('/categories', async (req, res) => {
   try {
-    // Find all products and extract unique categories
-    const products = await Product.find().distinct('category');
-    res.json(products);
+    const categories = await Product.distinct('category');
+    res.json(categories);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
 });
 
-// Get all unique categories
-app.get('/category', async (req, res) => {
+app.get('/orders/byemail', async (req, res) => {
   try {
-    // Find all unique categories from products
-    const categories = await Product.distinct('category');
-    res.json(categories);
+    const { email } = req.query;
+    const orders = await Order.find({ email });
+    res.json(orders);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
