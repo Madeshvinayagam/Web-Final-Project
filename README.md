@@ -85,6 +85,10 @@ REACT_APP_API_URL=http://localhost:3000
 
 - npm start 
 
+> note: create two terminals in Vscode
+- Terminal 1 runs the frontend
+- Terminal 2 runs the backend.
+
 
 
 
